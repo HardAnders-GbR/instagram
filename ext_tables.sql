@@ -23,7 +23,7 @@ CREATE TABLE tx_instagram_domain_model_image
     uid int(11) unsigned DEFAULT 0 NOT NULL auto_increment,
     pid int(11) DEFAULT 0 NOT NULL,
 
-    text        varchar(5000)    DEFAULT NULL,
+    text        varchar(5000)    DEFAULT '',
     createdtime int(11)          DEFAULT NULL,
     instagramid varchar(255)     DEFAULT '',
     tags        varchar(5000)    DEFAULT '',

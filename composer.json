@@ -11,11 +11,16 @@
 	"version": "1.0.0",
 	"require": {
 		"php": "^7.4 || ^8.0",
-		"typo3/cms-base-distribution": "^10.4 || ^11.5"
+		"typo3/cms-core": "^10.4 || ^11.5"
 	},
 	"autoload": {
 		"psr-4": {
 			"Hardanders\\Instagram\\": "Classes"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Hardanders\\Instagram\\Tests\\": "Tests"
 		}
 	},
 	"replace": {
@@ -29,9 +34,17 @@
 		}
 	},
 	"require-dev": {
-		"ergebnis/composer-normalize": "^2.24",
-		"phpstan/phpstan": "^1.4",
-		"typo3/coding-standards": "^0.5.0"
+		"ergebnis/composer-normalize": "^2.15.0",
+		"friendsofphp/php-cs-fixer": "^3.1",
+		"helmich/typo3-typoscript-lint": "^2.1",
+		"justinrainbow/json-schema": "^5.2",
+		"phpspec/prophecy-phpunit": "^2.0",
+		"phpstan/extension-installer": "^1.1",
+		"phpstan/phpstan": "^0.12.99",
+		"phpunit/phpcov": "^8.2",
+		"saschaegerer/phpstan-typo3": "^0.13.3",
+		"typo3/coding-standards": "^0.5.0",
+		"typo3/testing-framework": "^6"
 	},
 	"config": {
 		"sort-packages": true,
@@ -39,7 +52,8 @@
 		"allow-plugins": {
 			"typo3/class-alias-loader": true,
 			"typo3/cms-composer-installers": true,
-			"ergebnis/composer-normalize": true
+			"ergebnis/composer-normalize": true,
+			"phpstan/extension-installer": true
 		}
 	},
 	"scripts": {

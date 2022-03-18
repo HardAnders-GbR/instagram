@@ -35,8 +35,7 @@ final class InstagramApiClient
     public function getAuthorizationLink(string $instagramAppId, string $returnUri): string
     {
         return sprintf(
-            '%s/oauth/authorize/?client_id=%s&redirect_uri=%s&response_type=code&scope=user_profile,user_media',
-            $this->apiBaseUrl,
+            'https://api.instagram.com/oauth/authorize/?client_id=%s&redirect_uri=%s&response_type=code&scope=user_profile,user_media',
             $instagramAppId,
             $returnUri
         );
@@ -54,11 +53,22 @@ final class InstagramApiClient
         return $this->request($endpoint);
     }
 
-    public function getImages(string $userId): array
+    public function getImagesRecursive(string $userId, string $endpoint = '', $images = []): array
     {
-        $endpoint = sprintf('%s/%s/media/?access_token=%s', $this->apiBaseUrl, $userId, $this->accesstoken);
+        if ('' === $endpoint) {
+            $endpoint = sprintf('%s/%s/media/?access_token=%s', $this->apiBaseUrl, $userId, $this->accesstoken);
+        }
 
-        return $this->request($endpoint);
+        $response = $this->request($endpoint);
+
+        while (isset($response['paging']['next'])) {
+            $images = array_merge($images, $response['data']);
+            $endpoint = $response['paging']['next'];
+
+            $this->getImagesRecursive($userId, $endpoint, $images);
+        }
+
+        return $images;
     }
 
     public function getMedia(int $mediaId, array $fields = null)
@@ -80,7 +90,7 @@ final class InstagramApiClient
     /**
      * @return int[]
      */
-    public function getChildrenMediaIds(int $mediaId): array
+    public function getChildrenMediaIds(string $mediaId): array
     {
         $endpoint = sprintf('%s/%s/children?access_token=%s', $this->apiBaseUrl, $mediaId, $this->accesstoken);
         $response = $this->request($endpoint);
@@ -114,21 +124,19 @@ final class InstagramApiClient
 
     public function getAccessToken(string $clientId, string $clientSecret, string $redirectUri, string $code): array
     {
-        $endpoint = sprintf('%s/oauth/access_token', $this->apiBaseUrl);
+        $endpoint = 'https://api.instagram.com/oauth/access_token';
 
-        $queryParams = [
-            'grant_type' => 'authorization_code',
-            'client_id' => $clientId,
-            'client_secret' => $clientSecret,
-            'redirect_uri' => $redirectUri,
-            'code' => rtrim($code, '#_'),
+        $additionalOptions = [
+            'form_params' => [
+                'client_id' => $clientId,
+                'client_secret' => $clientSecret,
+                'code' => $code,
+                'grant_type' => 'authorization_code',
+                'redirect_uri' => $redirectUri,
+            ],
         ];
 
-        $queryString = http_build_query($queryParams);
-
-        $endpoint .= $queryString;
-
-        return $this->request($endpoint, 'POST');
+        return $this->request($endpoint, 'POST', $additionalOptions);
     }
 
     public function requestLongLivedAccessToken(
@@ -136,8 +144,7 @@ final class InstagramApiClient
         string $accessToken
     ): array {
         $endpoint = sprintf(
-            '%s/access_token/?grant_type=ig_exchange_token&client_secret=%s&access_token=%s',
-            $this->apiBaseUrl,
+            'https://graph.instagram.com/access_token/?grant_type=ig_exchange_token&client_secret=%s&access_token=%s',
             $clientSecret,
             $accessToken
         );
@@ -146,9 +153,8 @@ final class InstagramApiClient
     }
 
     /**
-     * @throws \Exception
-     *
      * @return mixed[]
+     * @throws \Exception
      */
     private function request(string $url, string $method = 'GET', array $additionalOptions = []): array
     {

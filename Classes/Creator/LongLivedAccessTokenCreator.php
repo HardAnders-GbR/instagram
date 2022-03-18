@@ -35,6 +35,7 @@ final class LongLivedAccessTokenCreator
             $instagramUserId
         );
 
+        $longLivedAccessToken->setPid(0);
         $this->tokenRepository->removeAll();
         $this->tokenRepository->add($longLivedAccessToken);
 

@@ -11,7 +11,7 @@ final class Image extends AbstractEntity
 {
     protected $_languageUid;
 
-    protected ?string $text = null;
+    protected string $text = '';
 
     /**
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\FileReference>

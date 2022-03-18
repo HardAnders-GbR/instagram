@@ -220,14 +220,12 @@ class ImportImagesForAccountCommand extends Command
         }
 
         $account = $this->accountRepository->findOneByUserid($instagramUser['id']);
-
         $account = $this->upsertAccount($account, $instagramUser, $storagePid);
 
-        $images = $this->instagramApiClient->getImages($userId);
+        $images = $this->instagramApiClient->getImagesRecursive($userId);
 
         foreach ($images['data'] as $imageData) {
             $image = $this->imageRepository->findOneByInstagramid($imageData['id']);
-
             $this->handleImage($image, (int)$imageData['id'], $account, $storagePid);
         }
 
