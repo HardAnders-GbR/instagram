@@ -1,0 +1,28 @@
+parameters:
+  env(INSTAGRAM_API_BASEURL): 'https://graph.instagram.com'
+
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  Hardanders\Instagram\:
+    resource: '../Classes/*'
+
+  Hardanders\Instagram\Command\AccessTokenRefresherCommand:
+    tags:
+      - name: 'console.command'
+        command: 'instagram:refresh-accesstoken'
+        description: 'Refreshes the instagram accesstoken for all users'
+
+  Hardanders\Instagram\Command\ImportImagesForAccountCommand:
+    tags:
+      - name: 'console.command'
+        command: 'instagram:account:import-images'
+        description: 'Refreshes the instagram accesstoken for all users'
+
+  Hardanders\Instagram\Client\InstagramApiClient:
+    arguments:
+      $requestFactory: '@Psr\Http\Message\RequestFactoryInterface'
+      $apiBaseUrl: '%env(INSTAGRAM_API_BASEURL)%'

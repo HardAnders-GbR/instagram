@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2016-10-08T19:40:35Z" product-name="instagram">
+		<header/>
+		<body>
+			<trans-unit id="tx_instagram_domain_model_image">
+				<source>Image</source>
+			</trans-unit>
+			<trans-unit id="tx_instagram_domain_model_image.text">
+				<source>Text</source>
+			</trans-unit>
+			<trans-unit id="tx_instagram_domain_model_image.image">
+				<source>Image</source>
+			</trans-unit>
+			<trans-unit id="tx_instagram_domain_model_image.createdtime">
+				<source>Createdtime</source>
+			</trans-unit>
+			<trans-unit id="tx_instagram_domain_model_image.instagramid">
+				<source>Instagramid</source>
+			</trans-unit>
+			<trans-unit id="tx_instagram_domain_model_image.likes">
+				<source>Likes</source>
+			</trans-unit>
+			<trans-unit id="tx_instagram_domain_model_image.commentcount">
+				<source>Commentcount</source>
+			</trans-unit>
+			<trans-unit id="tx_instagram_domain_model_image.filter">
+				<source>Filter</source>
+			</trans-unit>
+			<trans-unit id="tx_instagram_domain_model_image.tags">
+				<source>Tags</source>
+			</trans-unit>
+			<trans-unit id="tx_instagram_domain_model_image.longitude">
+				<source>Longitude</source>
+			</trans-unit>
+			<trans-unit id="tx_instagram_domain_model_image.latitude">
+				<source>Latitude</source>
+			</trans-unit>
+			<trans-unit id="tx_instagram_domain_model_image.locationname">
+				<source>Locationname</source>
+			</trans-unit>
+			<trans-unit id="tx_instagram_domain_model_image.link">
+				<source>Link</source>
+			</trans-unit>
+			<trans-unit id="tx_instagram_domain_model_image.type">
+				<source>Type</source>
+			</trans-unit>
+			<trans-unit id="tx_instagram_domain_model_image.lastupdate">
+				<source>Lastupdate</source>
+			</trans-unit>
+			<trans-unit id="tx_instagram_domain_model_image.comments">
+				<source>Comments</source>
+			</trans-unit>
+			<trans-unit id="tx_instagram_domain_model_image.taggedpeople">
+				<source>Taggedpeople</source>
+			</trans-unit>
+			<trans-unit id="tx_instagram_domain_model_person">
+				<source>Person</source>
+			</trans-unit>
+			<trans-unit id="tx_instagram_domain_model_person.username">
+				<source>Username</source>
+			</trans-unit>
+			<trans-unit id="tx_instagram_domain_model_person.fullname">
+				<source>Fullname</source>
+			</trans-unit>
+			<trans-unit id="tx_instagram_domain_model_person.profilepicture">
+				<source>Profilepicture</source>
+			</trans-unit>
+			<trans-unit id="tx_instagram_domain_model_person.userid">
+				<source>Userid</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>
