@@ -19,7 +19,6 @@
 		}
 	},
 	"replace": {
-		"hardanders/instagram": "self.version",
 		"typo3-ter/instagram": "self.version"
 	},
 	"extra": {
