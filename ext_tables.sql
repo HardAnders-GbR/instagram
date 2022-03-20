@@ -16,9 +16,9 @@ CREATE TABLE tx_instagram_domain_model_longlivedaccesstoken
 );
 
 #
-# Table structure for table 'tx_instagram_domain_model_image'
+# Table structure for table 'tx_instagram_domain_model_post'
 #
-CREATE TABLE tx_instagram_domain_model_image
+CREATE TABLE tx_instagram_domain_model_post
 (
     uid int(11) unsigned DEFAULT 0 NOT NULL auto_increment,
     pid int(11) DEFAULT 0 NOT NULL,
@@ -31,7 +31,7 @@ CREATE TABLE tx_instagram_domain_model_image
     type        varchar(255)     DEFAULT '',
     lastupdate  int(11) unsigned DEFAULT NULL,
     account     int(11) unsigned DEFAULT NULL,
-    image       varchar(255)     DEFAULT NULL,
+    images      varchar(255)     DEFAULT NULL,
     videos      varchar(255)     DEFAULT NULL,
 
     PRIMARY KEY (uid),
@@ -56,9 +56,9 @@ CREATE TABLE tx_instagram_domain_model_account
 );
 
 #
-# Table structure for table 'tx_instagram_account_image_mm'
+# Table structure for table 'tx_instagram_account_post_mm'
 #
-CREATE TABLE tx_instagram_account_image_mm
+CREATE TABLE tx_instagram_account_post_mm
 (
     uid_local       int(11) unsigned DEFAULT '0' NOT NULL,
     uid_foreign     int(11) unsigned DEFAULT '0' NOT NULL,

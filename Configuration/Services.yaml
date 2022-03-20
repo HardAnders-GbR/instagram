@@ -14,13 +14,13 @@ services:
     tags:
       - name: 'console.command'
         command: 'instagram:refresh-accesstoken'
-        description: 'Refreshes the instagram accesstoken for all users'
+        description: 'Refreshes all long lived accesstokens.'
 
-  Hardanders\Instagram\Command\ImportImagesForAccountCommand:
+  Hardanders\Instagram\Command\ImportPostsCommand:
     tags:
       - name: 'console.command'
-        command: 'instagram:account:import-images'
-        description: 'Refreshes the instagram accesstoken for all users'
+        command: 'instagram:account:import-posts'
+        description: 'Imports the posts for a given instagram account.'
 
   Hardanders\Instagram\Client\InstagramApiClient:
     arguments:

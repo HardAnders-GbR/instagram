@@ -53,14 +53,14 @@ final class InstagramApiClient
         return $this->request($endpoint);
     }
 
-    public function getImages(string $userId): array
+    public function getLatestPosts(string $userId): array
     {
         $endpoint = sprintf('%s/%s/media/?access_token=%s', $this->apiBaseUrl, $userId, $this->accesstoken);
 
         return $this->request($endpoint);
     }
 
-    public function getImagesRecursive(string $userId, string $endpoint = '', &$images = []): array
+    public function getPostsRecursive(string $userId, string $endpoint = '', &$posts = []): array
     {
         if ('' === $endpoint) {
             // Initial request endpoint
@@ -70,16 +70,16 @@ final class InstagramApiClient
         $response = $this->request($endpoint);
 
         if (isset($response['paging']['next'])) {
-            foreach ($response['data'] as $imageData) {
-                $images[] = $imageData;
+            foreach ($response['data'] as $postData) {
+                $posts[] = $postData;
             }
 
             $endpoint = $response['paging']['next'];
 
-            $this->getImagesRecursive($userId, $endpoint, $images);
+            $this->getPostsRecursive($userId, $endpoint, $posts);
         }
 
-        return $images;
+        return $posts;
     }
 
     public function getMedia(int $mediaId, array $fields = null)
@@ -108,8 +108,8 @@ final class InstagramApiClient
 
         $return = [];
 
-        foreach ($response['data'] as $imageData) {
-            $return[] = (int)$imageData['id'];
+        foreach ($response['data'] as $postData) {
+            $return[] = (int)$postData['id'];
         }
 
         return $return;

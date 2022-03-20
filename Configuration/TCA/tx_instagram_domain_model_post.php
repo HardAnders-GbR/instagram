@@ -2,7 +2,7 @@
 
 return [
     'ctrl' => [
-        'title' => 'LLL:EXT:instagram/Resources/Private/Language/locallang_db.xlf:tx_instagram_domain_model_image',
+        'title' => 'LLL:EXT:instagram/Resources/Private/Language/locallang_db.xlf:tx_instagram_domain_model_post',
         'label' => 'text',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
@@ -20,13 +20,13 @@ return [
             'starttime' => 'starttime',
             'endtime' => 'endtime',
         ],
-        'searchFields' => 'type,text,image,videos,createdtime,instagramid,link,lastupdate,account',
-        'iconfile' => 'EXT:instagram/Resources/Public/Icons/tx_instagram_domain_model_image.gif',
+        'searchFields' => 'type,text,images,videos,createdtime,instagramid,link,lastupdate,account',
+        'iconfile' => 'EXT:instagram/Resources/Public/Icons/tx_instagram_domain_model_post.gif',
     ],
     'interface' => [],
     'types' => [
         '1' => [
-            'showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, type, text, image, videos, createdtime, instagramid, tags, account, link, lastupdate, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime',
+            'showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, type, text, images, videos, createdtime, instagramid, tags, account, link, lastupdate, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime',
         ],
     ],
     'palettes' => [
@@ -58,8 +58,8 @@ return [
                 'items' => [
                     ['', 0],
                 ],
-                'foreign_table' => 'tx_instagram_domain_model_image',
-                'foreign_table_where' => 'AND tx_instagram_domain_model_image.pid=###CURRENT_PID### AND tx_instagram_domain_model_image.sys_language_uid IN (-1,0)',
+                'foreign_table' => 'tx_instagram_domain_model_post',
+                'foreign_table_where' => 'AND tx_instagram_domain_model_post.pid=###CURRENT_PID### AND tx_instagram_domain_model_post.sys_language_uid IN (-1,0)',
             ],
         ],
         'l10n_diffsource' => [
@@ -116,7 +116,7 @@ return [
         ],
         'text' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:instagram/Resources/Private/Language/locallang_db.xlf:tx_instagram_domain_model_image.text',
+            'label' => 'LLL:EXT:instagram/Resources/Private/Language/locallang_db.xlf:tx_instagram_domain_model_post.text',
             'config' => [
                 'type' => 'input',
                 'size' => 30,
@@ -125,7 +125,7 @@ return [
         ],
         'createdtime' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:instagram/Resources/Private/Language/locallang_db.xlf:tx_instagram_domain_model_image.createdtime',
+            'label' => 'LLL:EXT:instagram/Resources/Private/Language/locallang_db.xlf:tx_instagram_domain_model_post.createdtime',
             'config' => [
                 'type' => 'input',
                 'size' => 4,
@@ -134,7 +134,7 @@ return [
         ],
         'instagramid' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:instagram/Resources/Private/Language/locallang_db.xlf:tx_instagram_domain_model_image.instagramid',
+            'label' => 'LLL:EXT:instagram/Resources/Private/Language/locallang_db.xlf:tx_instagram_domain_model_post.instagramid',
             'config' => [
                 'type' => 'input',
                 'size' => 30,
@@ -143,7 +143,7 @@ return [
         ],
         'tags' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:instagram/Resources/Private/Language/locallang_db.xlf:tx_instagram_domain_model_image.tags',
+            'label' => 'LLL:EXT:instagram/Resources/Private/Language/locallang_db.xlf:tx_instagram_domain_model_post.tags',
             'config' => [
                 'type' => 'input',
                 'size' => 30,
@@ -152,7 +152,7 @@ return [
         ],
         'link' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:instagram/Resources/Private/Language/locallang_db.xlf:tx_instagram_domain_model_image.link',
+            'label' => 'LLL:EXT:instagram/Resources/Private/Language/locallang_db.xlf:tx_instagram_domain_model_post.link',
             'config' => [
                 'type' => 'input',
                 'size' => 30,
@@ -161,7 +161,7 @@ return [
         ],
         'type' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:instagram/Resources/Private/Language/locallang_db.xlf:tx_instagram_domain_model_image.type',
+            'label' => 'LLL:EXT:instagram/Resources/Private/Language/locallang_db.xlf:tx_instagram_domain_model_post.type',
             'config' => [
                 'type' => 'input',
                 'size' => 30,
@@ -171,7 +171,7 @@ return [
         ],
         'lastupdate' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:instagram/Resources/Private/Language/locallang_db.xlf:tx_instagram_domain_model_image.lastupdate',
+            'label' => 'LLL:EXT:instagram/Resources/Private/Language/locallang_db.xlf:tx_instagram_domain_model_post.lastupdate',
             'config' => [
                 'type' => 'input',
                 'size' => 30,
@@ -180,7 +180,7 @@ return [
         ],
         'videos' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:instagram/Resources/Private/Language/locallang_db.xlf:tx_instagram_domain_model_image.videos',
+            'label' => 'LLL:EXT:instagram/Resources/Private/Language/locallang_db.xlf:tx_instagram_domain_model_post.videos',
             'config' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getFileFieldTCAConfig(
                 'videos',
                 [
@@ -193,24 +193,24 @@ return [
         ],
         'account' => [
             'exclude' => 0,
-            'label' => 'LLL:EXT:instagram/Resources/Private/Language/locallang_db.xlf:tx_instagram_domain_model_image.account',
+            'label' => 'LLL:EXT:instagram/Resources/Private/Language/locallang_db.xlf:tx_instagram_domain_model_post.account',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'internal_type' => 'db',
                 'foreign_table' => 'tx_instagram_domain_model_account',
                 'allowed' => 'tx_instagram_domain_model_account',
-                'MM' => 'tx_instagram_account_image_mm',
-                'MM_opposite_field' => 'images',
+                'MM' => 'tx_instagram_account_post_mm',
+                'MM_opposite_field' => 'posts',
                 'size' => 1,
                 'maxitems' => 1,
             ],
         ],
-        'image' => [
+        'images' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:instagram/Resources/Private/Language/locallang_db.xlf:tx_instagram_domain_model_image.image',
+            'label' => 'LLL:EXT:instagram/Resources/Private/Language/locallang_db.xlf:tx_instagram_domain_model_post.images',
             'config' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getFileFieldTCAConfig(
-                'image',
+                'images',
                 [
                     'appearance' => [
                         'createNewRelationLinkTitle' => 'LLL:EXT:cms/locallang_ttc.xlf:images.addFileReference',

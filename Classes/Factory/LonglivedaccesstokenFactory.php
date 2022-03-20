@@ -9,7 +9,12 @@ use Hardanders\Instagram\Domain\Model\Longlivedaccesstoken;
 
 final class LonglivedaccesstokenFactory
 {
-    public function create(string $token, string $type, DateTime $expiresAt, string $userId): Longlivedaccesstoken
+    public function create(
+        string $token,
+        string $type,
+        DateTime $expiresAt,
+        string $userId
+    ): Longlivedaccesstoken
     {
         return (new Longlivedaccesstoken())
             ->setToken($token)

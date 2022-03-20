@@ -19,13 +19,13 @@ return [
             'starttime' => 'starttime',
             'endtime' => 'endtime',
         ],
-        'searchFields' => 'username,userid,images,lastupdate',
+        'searchFields' => 'username,userid,posts,lastupdate',
         'iconfile' => 'EXT:instagram/Resources/Public/Icons/tx_instagram_domain_model_account.gif',
     ],
     'interface' => [],
     'types' => [
         '1' => [
-            'showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, username, userid, images, lastupdate, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime',
+            'showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, username, userid, posts, lastupdate, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime',
         ],
     ],
     'palettes' => [
@@ -140,14 +140,14 @@ return [
                 'eval' => 'integer',
             ],
         ],
-        'images' => [
+        'posts' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:instagram/Resources/Private/Language/locallang_db.xlf:tx_instagram_domain_model_account.images',
+            'label' => 'LLL:EXT:instagram/Resources/Private/Language/locallang_db.xlf:tx_instagram_domain_model_account.posts',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectMultipleSideBySide',
-                'foreign_table' => 'tx_instagram_domain_model_image',
-                'MM' => 'tx_instagram_account_image_mm',
+                'foreign_table' => 'tx_instagram_domain_model_post',
+                'MM' => 'tx_instagram_account_post_mm',
                 'size' => 10,
                 'autoSizeMax' => 30,
                 'maxitems' => 9999,
@@ -173,7 +173,7 @@ return [
                         'title' => 'Create new',
                         'icon' => 'add.gif',
                         'params' => [
-                            'table' => 'tx_instagram_domain_model_image',
+                            'table' => 'tx_instagram_domain_model_post',
                             'pid' => '###CURRENT_PID###',
                             'setValue' => 'prepend',
                         ],

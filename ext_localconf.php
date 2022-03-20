@@ -8,10 +8,10 @@ if (! defined('TYPO3')) {
     'Hardanders.Instagram',
     'Pi1',
     [
-        \Hardanders\Instagram\Controller\ImageController::class => 'list, show',
+        \Hardanders\Instagram\Controller\PostController::class => 'list, show',
     ],
     // non-cacheable actions
     [
-        \Hardanders\Instagram\Controller\ImageController::class => '',
+        \Hardanders\Instagram\Controller\PostController::class => '',
     ]
 );

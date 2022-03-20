@@ -10,7 +10,7 @@ use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 
-final class ImageRepository extends Repository
+final class PostRepository extends Repository
 {
     protected $defaultOrderings = [
         'createdtime' => QueryInterface::ORDER_DESCENDING,
@@ -41,7 +41,7 @@ final class ImageRepository extends Repository
         return $query->execute();
     }
 
-    public function findImagesByHashtags(array $hashtags, string $logicalConstraint): QueryResultInterface
+    public function findPostsByHashtags(array $hashtags, string $logicalConstraint): QueryResultInterface
     {
         $constraints = [];
         $query = $this->createQuery();

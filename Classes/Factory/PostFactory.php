@@ -5,19 +5,19 @@ declare(strict_types=1);
 namespace Hardanders\Instagram\Factory;
 
 use DateTime;
-use Hardanders\Instagram\Domain\Model\Image;
+use Hardanders\Instagram\Domain\Model\Post;
 use Hardanders\Instagram\Service\EmojiService;
 
-class ImageFactory
+class PostFactory
 {
-    public function create(): Image
+    public function create(): Post
     {
-        return new Image();
+        return new Post();
     }
 
-    public function createFromAPIResponse(array $apiData): Image
+    public function createFromAPIResponse(array $apiData): Post
     {
-        $image = ($this->create())
+        $post = ($this->create())
             ->setCreatedtime((int)(new DateTime($apiData['timestamp']))->format('U'))
             ->setType($apiData['media_type'])
             ->setInstagramid($apiData['id'])
@@ -26,16 +26,16 @@ class ImageFactory
         ;
 
         if ($apiData['caption']) {
-            $image->setText(EmojiService::remove_emoji($apiData['caption']));
+            $post->setText(EmojiService::remove_emoji($apiData['caption']));
 
             preg_match_all('/#(\\w+)/', $apiData['caption'], $hashtags);
 
             if ($hashtags[0]) {
                 $hashtagsString = implode(' ', $hashtags[0]);
-                $image->setTags($hashtagsString);
+                $post->setTags($hashtagsString);
             }
         }
 
-        return $image;
+        return $post;
     }
 }

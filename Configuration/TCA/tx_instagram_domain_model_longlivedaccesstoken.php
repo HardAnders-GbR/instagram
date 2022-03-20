@@ -57,8 +57,8 @@ return [
                 'items' => [
                     ['', 0],
                 ],
-                'foreign_table' => 'tx_instagram_domain_model_image',
-                'foreign_table_where' => 'AND tx_instagram_domain_model_image.pid=###CURRENT_PID### AND tx_instagram_domain_model_image.sys_language_uid IN (-1,0)',
+                'foreign_table' => 'tx_instagram_domain_model_post',
+                'foreign_table_where' => 'AND tx_instagram_domain_model_post.pid=###CURRENT_PID### AND tx_instagram_domain_model_post.sys_language_uid IN (-1,0)',
             ],
         ],
         'l10n_diffsource' => [

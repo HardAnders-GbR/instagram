@@ -19,16 +19,16 @@ final class Account extends AbstractEntity
     protected string $username = '';
 
     /**
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Hardanders\Instagram\Domain\Model\Image>
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Hardanders\Instagram\Domain\Model\Post>
      */
-    protected ?ObjectStorage $images = null;
+    protected ?ObjectStorage $posts = null;
 
     protected int $lastupdate = 0;
 
     public function __construct(string $userId)
     {
         $this->userid = $userId;
-        $this->images = new ObjectStorage();
+        $this->posts = new ObjectStorage();
     }
 
     public function setSysLanguageUid(int $_languageUid): self
@@ -60,31 +60,31 @@ final class Account extends AbstractEntity
         return $this->userid;
     }
 
-    public function addImage(Image $image): self
+    public function addPost(Post $post): self
     {
-        $this->images->attach($image);
+        $this->posts->attach($post);
 
         return $this;
     }
 
     /**
-     * @param Image $imageToRemove The Image to be removed
+     * @param Post $postToRemove The Post to be removed
      */
-    public function removeImage(Image $imageToRemove): self
+    public function removePost(Post $postToRemove): self
     {
-        $this->images->detach($imageToRemove);
+        $this->posts->detach($postToRemove);
 
         return $this;
     }
 
-    public function getImages(): ObjectStorage
+    public function getPosts(): ObjectStorage
     {
-        return $this->images;
+        return $this->posts;
     }
 
-    public function setImages(ObjectStorage $images): self
+    public function setPosts(ObjectStorage $posts): self
     {
-        $this->images = $images;
+        $this->posts = $posts;
 
         return $this;
     }

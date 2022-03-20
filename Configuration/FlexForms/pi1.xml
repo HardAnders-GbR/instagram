@@ -7,7 +7,7 @@
                 </TCEforms>
                 <type>array</type>
                 <el>
-                    <settings.maxImagesToDisplay>
+                    <settings.maxPostsToDisplay>
                         <TCEforms>
                             <label>Wieviele Bilder sollen maximal angezeigt werden?</label>
                             <config>
@@ -17,7 +17,7 @@
                                 <eval>integer</eval>
                             </config>
                         </TCEforms>
-                    </settings.maxImagesToDisplay>
+                    </settings.maxPostsToDisplay>
 
                     <settings.showLinkToInstagramProfile>
                         <TCEforms>
@@ -55,7 +55,7 @@
                         </TCEforms>
                     </settings.show.video>
 
-                    <settings.showImagesByHashtag>
+                    <settings.showPostsByHashtag>
                         <TCEforms>
                             <label>Nur Bilder mit diesen Hashtags anzeigen (mit #, komma-separiert):</label>
                             <config>
@@ -65,7 +65,7 @@
                                 <eval>trim</eval>
                             </config>
                         </TCEforms>
-                    </settings.showImagesByHashtag>
+                    </settings.showPostsByHashtag>
 
                     <settings.logicalConstraint>
                         <TCEforms>

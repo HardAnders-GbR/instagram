@@ -5,10 +5,10 @@ if (! defined('TYPO3')) {
 }
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr(
-    'tx_instagram_domain_model_image',
-    'EXT:instagram/Resources/Private/Language/locallang_csh_tx_instagram_domain_model_image.xlf'
+    'tx_instagram_domain_model_post',
+    'EXT:instagram/Resources/Private/Language/locallang_csh_tx_instagram_domain_model_post.xlf'
 );
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_instagram_domain_model_image');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_instagram_domain_model_post');
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr(
     'tx_instagram_domain_model_longlivedaccesstoken',

@@ -6,8 +6,8 @@
 			<trans-unit id="text.description">
 				<source>text</source>
 			</trans-unit>
-			<trans-unit id="image.description">
-				<source>image</source>
+			<trans-unit id="images.description">
+				<source>images</source>
 			</trans-unit>
 			<trans-unit id="createdtime.description">
 				<source>createdtime</source>

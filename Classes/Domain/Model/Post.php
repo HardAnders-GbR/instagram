@@ -7,7 +7,7 @@ namespace Hardanders\Instagram\Domain\Model;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
-final class Image extends AbstractEntity
+final class Post extends AbstractEntity
 {
     protected $_languageUid;
 
@@ -16,7 +16,7 @@ final class Image extends AbstractEntity
     /**
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\FileReference>
      */
-    protected ?ObjectStorage $image = null;
+    protected ?ObjectStorage $images = null;
 
     /**
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\FileReference>
@@ -134,19 +134,19 @@ final class Image extends AbstractEntity
     }
 
     /**
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\FileReference> $image
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\FileReference> $images
      */
-    public function getImage(): ?ObjectStorage
+    public function getImages(): ?ObjectStorage
     {
-        return $this->image;
+        return $this->images;
     }
 
     /**
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\FileReference> $image
+     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\FileReference> $images
      */
-    public function setImage(ObjectStorage $image): self
+    public function setImage(ObjectStorage $images): self
     {
-        $this->image = $image;
+        $this->images = $images;
 
         return $this;
     }
