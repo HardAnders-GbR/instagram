@@ -28,32 +28,32 @@
                         </TCEforms>
                     </settings.showLinkToInstagramProfile>
 
-                    <settings.show.images>
+                    <settings.show.image>
                         <TCEforms>
                             <label>Zeige Bilder</label>
                             <config>
                                 <type>check</type>
                             </config>
                         </TCEforms>
-                    </settings.show.images>
+                    </settings.show.image>
 
-                    <settings.show.carousels>
+                    <settings.show.carousel>
                         <TCEforms>
                             <label>Zeige Posts mit mehreren Bildern (Carousel)</label>
                             <config>
                                 <type>check</type>
                             </config>
                         </TCEforms>
-                    </settings.show.carousels>
+                    </settings.show.carousel>
 
-                    <settings.show.videos>
+                    <settings.show.video>
                         <TCEforms>
                             <label>Zeige Videos</label>
                             <config>
                                 <type>check</type>
                             </config>
                         </TCEforms>
-                    </settings.show.videos>
+                    </settings.show.video>
 
                     <settings.showImagesByHashtag>
                         <TCEforms>

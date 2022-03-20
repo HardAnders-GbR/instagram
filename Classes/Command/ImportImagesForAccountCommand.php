@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Hardanders\Instagram\Command;
 
+use GuzzleHttp\Exception\ClientException;
 use Hardanders\Instagram\Client\InstagramApiClient;
 use Hardanders\Instagram\Domain\Model\Account;
 use Hardanders\Instagram\Domain\Model\Image;
@@ -18,6 +19,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Resource\File;
@@ -46,16 +48,17 @@ class ImportImagesForAccountCommand extends Command
     private ImageFactory $imageFactory;
 
     public function __construct(
-        InstagramApiClient $instagramApiClient,
-        ImageRepository $imageRepository,
-        AccountRepository $accountRepository,
+        InstagramApiClient             $instagramApiClient,
+        ImageRepository                $imageRepository,
+        AccountRepository              $accountRepository,
         LonglivedaccesstokenRepository $longlivedaccesstokenRepository,
-        PersistenceManagerInterface $persistenceManager,
-        AccountFactory $accountFactory,
-        InstagramService $instagramService,
-        ImageFactory $imageFactory,
-        $name = null
-    ) {
+        PersistenceManagerInterface    $persistenceManager,
+        AccountFactory                 $accountFactory,
+        InstagramService               $instagramService,
+        ImageFactory                   $imageFactory,
+                                       $name = null
+    )
+    {
         parent::__construct($name);
 
         $this->instagramApiClient = $instagramApiClient;
@@ -66,6 +69,14 @@ class ImportImagesForAccountCommand extends Command
         $this->accountFactory = $accountFactory;
         $this->instagramService = $instagramService;
         $this->imageFactory = $imageFactory;
+    }
+
+    protected function configure()
+    {
+        $this
+            ->setHelp('Imports images for a given instagram account')
+            ->addArgument('userId', InputArgument::REQUIRED, 'Instagram User/Account ID to import images for')
+            ->addArgument('storagePid', InputArgument::REQUIRED, 'The PID where to save the image records');
     }
 
     /**
@@ -107,6 +118,8 @@ class ImportImagesForAccountCommand extends Command
             $image = $this->imageFactory->createFromAPIResponse($imageData);
         }
 
+        echo "Handling image '" . $image->getText() . "' \n";
+
         $image->setPid($storagePid);
         $image->setSysLanguageUid(-1);
         $this->imageRepository->add($image);
@@ -145,7 +158,6 @@ class ImportImagesForAccountCommand extends Command
                     $fileObject = $this->downloadFile($imageData['media_url'], 'mp4');
                     $this->addToFal($image, $fileObject, 'tx_instagram_domain_model_image', 'videos');
 
-                    // download thumbnail image
                     $fileObject = $this->downloadFile($imageData['thumbnail_url'], 'jpg');
                     $this->addToFal($image, $fileObject, 'tx_instagram_domain_model_image', 'image');
 
@@ -168,9 +180,9 @@ class ImportImagesForAccountCommand extends Command
      * Downloads a file from a given URL with the given fileextension
      * Return an fileObject of the downloaded file.
      *
+     * @return File|Folder
      * @throws \TYPO3\CMS\Core\Resource\Exception\ResourceDoesNotExistException
      *
-     * @return File|Folder
      */
     public function downloadFile(string $fileUrl, string $type)
     {
@@ -186,45 +198,54 @@ class ImportImagesForAccountCommand extends Command
         return GeneralUtility::makeInstance(ResourceFactory::class)->retrieveFileOrFolderObject($filePath);
     }
 
-    protected function configure()
-    {
-        $this
-            ->setHelp('Imports images for a given instagram account')
-            ->addArgument('userId', InputArgument::REQUIRED, 'Instagram User/Account ID to import images for')
-            ->addArgument('storagePid', InputArgument::REQUIRED, 'The PID where to save the image records')
-        ;
-    }
-
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $io = new SymfonyStyle($input, $output);
+
         $userId = $input->getArgument('userId');
         $storagePid = (int)$input->getArgument('storagePid');
 
         $longlivedToken = $this->longlivedaccesstokenRepository->findOneByUserid((int)$userId);
 
-        if (! $longlivedToken instanceof Longlivedaccesstoken) {
+        if (!$longlivedToken instanceof Longlivedaccesstoken) {
             throw new \Exception('Kein Longlivedaccesstoken gefunden!');
         }
 
         $accesstoken = $longlivedToken->getToken();
         $this->instagramApiClient->setAccesstoken($accesstoken);
 
-        $instagramUser = $this->instagramApiClient->getUserdata($userId);
+        try {
+            $instagramUser = $this->instagramApiClient->getUserdata($userId);
+        } catch (ClientException $exception) {
+            $message = $exception->getMessage();
+
+            if (strpos($message, 'Application request limit reached') !== false) {
+                $io->warning("The APIs rate limit of 200 requests/hour is exhausted. Please try again later.");
+
+                return Command::FAILURE;
+            }
+        }
 
         if (isset($instagramUser['error'])) {
             throw new \Exception($instagramUser['error']);
         }
 
-        if (! isset($instagramUser['id'])) {
-            throw new \Exception('Keine Instagram user_id in der Response vorhanden.');
+        if (!isset($instagramUser['id'])) {
+            throw new \Exception('No Instagram user_id found in API response.');
         }
 
         $account = $this->accountRepository->findOneByUserid($instagramUser['id']);
         $account = $this->upsertAccount($account, $instagramUser, $storagePid);
 
+        $output->writeln([
+            'Importing images for IG-Account: ' . $account->getUsername(),
+            '============',
+            '',
+        ]);
+
         $images = $this->instagramApiClient->getImagesRecursive($userId);
 
-        foreach ($images['data'] as $imageData) {
+        foreach ($images as $imageData) {
             $image = $this->imageRepository->findOneByInstagramid($imageData['id']);
             $this->handleImage($image, (int)$imageData['id'], $account, $storagePid);
         }

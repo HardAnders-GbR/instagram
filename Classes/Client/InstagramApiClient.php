@@ -53,16 +53,27 @@ final class InstagramApiClient
         return $this->request($endpoint);
     }
 
-    public function getImagesRecursive(string $userId, string $endpoint = '', $images = []): array
+    public function getImages(string $userId): array
+    {
+        $endpoint = sprintf('%s/%s/media/?access_token=%s', $this->apiBaseUrl, $userId, $this->accesstoken);
+
+        return $this->request($endpoint);
+    }
+
+    public function getImagesRecursive(string $userId, string $endpoint = '', &$images = []): array
     {
         if ('' === $endpoint) {
+            // Initial request endpoint
             $endpoint = sprintf('%s/%s/media/?access_token=%s', $this->apiBaseUrl, $userId, $this->accesstoken);
         }
 
         $response = $this->request($endpoint);
 
-        while (isset($response['paging']['next'])) {
-            $images = array_merge($images, $response['data']);
+        if (isset($response['paging']['next'])) {
+            foreach ($response['data'] as $imageData) {
+                $images[] = $imageData;
+            }
+
             $endpoint = $response['paging']['next'];
 
             $this->getImagesRecursive($userId, $endpoint, $images);
@@ -142,7 +153,8 @@ final class InstagramApiClient
     public function requestLongLivedAccessToken(
         string $clientSecret,
         string $accessToken
-    ): array {
+    ): array
+    {
         $endpoint = sprintf(
             'https://graph.instagram.com/access_token/?grant_type=ig_exchange_token&client_secret=%s&access_token=%s',
             $clientSecret,

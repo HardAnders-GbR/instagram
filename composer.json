@@ -57,7 +57,7 @@
 		}
 	},
 	"scripts": {
-		"ci:composer:normalize": "@composer normalize --dry-run",
+		"c": "@composer normalize --dry-run",
 		"ci:coverage": [
 			"@ci:coverage:functional"
 		],
