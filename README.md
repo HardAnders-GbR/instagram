@@ -1,4 +1,4 @@
-**EXPERIMENTAL** This component is currently experimental and is
+**EXPERIMENTAL** This extension is currently still in active development and is
 likely to change, or even change drastically.
 
 # Instagram
