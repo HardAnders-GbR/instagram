@@ -7,7 +7,7 @@
                 </TCEforms>
                 <type>array</type>
                 <el>
-                    <settings.maxPostsToDisplay>
+                    <settings.limit>
                         <TCEforms>
                             <label>Wieviele Bilder sollen maximal angezeigt werden?</label>
                             <config>
@@ -17,7 +17,7 @@
                                 <eval>integer</eval>
                             </config>
                         </TCEforms>
-                    </settings.maxPostsToDisplay>
+                    </settings.limit>
 
                     <settings.showLinkToInstagramProfile>
                         <TCEforms>
@@ -28,34 +28,34 @@
                         </TCEforms>
                     </settings.showLinkToInstagramProfile>
 
-                    <settings.show.image>
+                    <settings.types.image>
                         <TCEforms>
                             <label>Zeige Bilder</label>
                             <config>
                                 <type>check</type>
                             </config>
                         </TCEforms>
-                    </settings.show.image>
+                    </settings.types.image>
 
-                    <settings.show.carousel>
+                    <settings.types.carousel>
                         <TCEforms>
                             <label>Zeige Posts mit mehreren Bildern (Carousel)</label>
                             <config>
                                 <type>check</type>
                             </config>
                         </TCEforms>
-                    </settings.show.carousel>
+                    </settings.types.carousel>
 
-                    <settings.show.video>
+                    <settings.types.video>
                         <TCEforms>
                             <label>Zeige Videos</label>
                             <config>
                                 <type>check</type>
                             </config>
                         </TCEforms>
-                    </settings.show.video>
+                    </settings.types.video>
 
-                    <settings.showPostsByHashtag>
+                    <settings.hashtags.tags>
                         <TCEforms>
                             <label>Nur Bilder mit diesen Hashtags anzeigen (mit #, komma-separiert):</label>
                             <config>
@@ -65,9 +65,9 @@
                                 <eval>trim</eval>
                             </config>
                         </TCEforms>
-                    </settings.showPostsByHashtag>
+                    </settings.hashtags.tags>
 
-                    <settings.logicalConstraint>
+                    <settings.hashtags.logicalConstraint>
                         <TCEforms>
                             <label>Hashtags constraint</label>
                             <config>
@@ -85,7 +85,7 @@
                                 </items>
                             </config>
                         </TCEforms>
-                    </settings.logicalConstraint>
+                    </settings.hashtags.logicalConstraint>
                 </el>
             </ROOT>
         </sDEF>

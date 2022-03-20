@@ -7,7 +7,6 @@ namespace Hardanders\Instagram\Domain\Repository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
-use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 
 final class PostRepository extends Repository
@@ -24,34 +23,58 @@ final class PostRepository extends Repository
         $this->setDefaultQuerySettings($querySettings);
     }
 
-    /**
-     * @param string[] $types
-     */
-    public function findByTypes(array $types): QueryResultInterface
+    public function findBySettings(array $settings)
     {
         $query = $this->createQuery();
 
-        $constrains = [];
-        foreach ($types as $type) {
-            $constrains[] = $query->equals('type', $type);
+        $constraints = [
+            $this->getHashtagConstraints($settings['hashtags'], $query),
+            $this->getTypeConstraints($settings['types'], $query),
+        ];
+
+        if ($settings['limit']) {
+            $query->setLimit($settings['limit']);
         }
 
-        $query->matching($query->logicalOr($constrains));
-
-        return $query->execute();
+        return $query
+            ->matching($query->logicalAnd($constraints))
+            ->execute()
+            ->toArray();
     }
 
-    public function findPostsByHashtags(array $hashtags, string $logicalConstraint): QueryResultInterface
+    private function getHashtagConstraints($config, QueryInterface $query)
     {
-        $constraints = [];
-        $query = $this->createQuery();
-
-        foreach ($hashtags as $tag) {
-            $constraints[] = $query->like('tags', '%,' . $tag . ',%');
+        if ($config['tags'] === []) {
+            return [];
         }
 
-        $query->matching($query->{$logicalConstraint}($constraints));
+        $hashtagConstraints = [];
 
-        return $query->execute();
+        foreach ($config['tags'] as $hashtag) {
+            $hashtagConstraints[] = $query->like('tags', '%' . $hashtag . '%');
+        }
+
+        $logicalConstraint = $config['logicalConstraint'];
+
+        return $query->$logicalConstraint($hashtagConstraints);
+    }
+
+    /**
+     * @param string[] $typesToShow
+     * @param QueryInterface $query
+     *
+     * @return \TYPO3\CMS\Extbase\Persistence\Generic\Qom\OrInterface
+     */
+    private function getTypeConstraints(array $typesToShow, QueryInterface $query)
+    {
+        $typeConstraints = [];
+
+        /** @var string $type */
+
+        foreach ($typesToShow as $type) {
+            $typeConstraints[] = $query->equals('type', $type);
+        }
+
+        return $query->logicalOr($typeConstraints);
     }
 }

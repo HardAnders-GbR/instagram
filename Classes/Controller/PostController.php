@@ -6,6 +6,7 @@ namespace Hardanders\Instagram\Controller;
 
 use Hardanders\Instagram\Domain\Repository\PostRepository;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 final class PostController extends ActionController
 {
@@ -18,40 +19,36 @@ final class PostController extends ActionController
 
     public function listAction(): void
     {
-        $hashtagArray = [];
-        $posts = [];
+        $settings = [
+            'types' => [],
+            'hashtags' => [
+                'tags' => [],
+                'logicalConstraint' => $this->settings['hashtags']['logicalConstraint'],
+            ],
+        ];
 
-        if (\strlen($this->settings['showPostsByHashtag']) > 0) {
-            $hashtagArray[] = $this->settings['showPostsByHashtag'];
-
-            if (false !== strpos($this->settings['showPostsByHashtag'], ',')) {
-                $hashtagArray = explode(',', str_replace(' ', '', $this->settings['showPostsByHashtag']));
-            }
-
-            $posts = $this->postRepository->findPostsByHashtags(
-                $hashtagArray,
-                $this->settings['logicalConstraint']
-            );
+        if ($this->settings['limit']) {
+            $settings['limit'] = (int)$this->settings['limit'];
         }
 
-        $types = [];
-        foreach ($this->settings['show'] as $key => $value) {
+        if (\strlen($this->settings['hashtags']['tags']) > 0) {
+            $settings['hashtags']['tags'] = explode(',', str_replace(' ', '', $this->settings['hashtags']['tags']));
+        }
+
+        foreach ($this->settings['types'] as $key => $value) {
             if ($value) {
-                $types[] = $key;
+                $settings['types'][] = $key;
             }
         }
 
-        if (0 === \count($types)) {
-            $posts = $this->postRepository->findAll();
-        }
+        $posts = $this->postRepository->findBySettings($settings);
+        DebuggerUtility::var_dump($settings);
+        DebuggerUtility::var_dump($posts);
 
-        if (\count($types) > 0) {
-            $posts = $this->postRepository->findByTypes($types);
+        foreach ($posts as $post) {
+            DebuggerUtility::var_dump($post->getType() . ' : ' . $post->getText());
         }
-
-        if ($this->settings['maxPostsToDisplay']) {
-            $posts = array_slice($posts->toArray(), 0, $this->settings['maxPostsToDisplay']);
-        }
+        die("hier");
 
         $this->view->assign('posts', $posts);
     }
