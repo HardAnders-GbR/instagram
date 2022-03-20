@@ -1,40 +1,20 @@
 {
 	"name": "hardanders/instagram",
-	"type": "typo3-cms-extension",
 	"description": "",
+	"type": "typo3-cms-extension",
+	"version": "1.0.0",
 	"authors": [
 		{
 			"name": "Sven Petersen",
 			"role": "Developer"
 		}
 	],
-	"version": "1.0.0",
 	"require": {
 		"php": "^7.4 || ^8.0",
 		"typo3/cms-core": "^10.4 || ^11.5"
 	},
-	"autoload": {
-		"psr-4": {
-			"Hardanders\\Instagram\\": "Classes"
-		}
-	},
-	"autoload-dev": {
-		"psr-4": {
-			"Hardanders\\Instagram\\Tests\\": "Tests"
-		}
-	},
-	"replace": {
-		"typo3-ter/instagram": "self.version"
-	},
-	"extra": {
-		"typo3/cms": {
-			"app-dir": ".Build",
-			"extension-key": "instagram",
-			"web-dir": ".Build/public"
-		}
-	},
 	"require-dev": {
-		"ergebnis/composer-normalize": "^2.15.0",
+		"ergebnis/composer-normalize": "^2.24",
 		"friendsofphp/php-cs-fixer": "^3.1",
 		"helmich/typo3-typoscript-lint": "^2.1",
 		"justinrainbow/json-schema": "^5.2",
@@ -46,24 +26,50 @@
 		"typo3/coding-standards": "^0.5.0",
 		"typo3/testing-framework": "^6"
 	},
+	"replace": {
+		"typo3-ter/instagram": "self.version"
+	},
+	"suggest": {
+		"typo3/cms-scheduler": "^10.4 || ^11.5"
+	},
+	"autoload": {
+		"psr-4": {
+			"Hardanders\\Instagram\\": "Classes"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Hardanders\\Instagram\\Tests\\": "Tests"
+		}
+	},
 	"config": {
-		"sort-packages": true,
-		"vendor-dir": ".Build/vendor",
 		"allow-plugins": {
 			"typo3/class-alias-loader": true,
 			"typo3/cms-composer-installers": true,
 			"ergebnis/composer-normalize": true,
 			"phpstan/extension-installer": true
+		},
+		"sort-packages": true,
+		"vendor-dir": ".Build/vendor"
+	},
+	"extra": {
+		"typo3/cms": {
+			"app-dir": ".Build",
+			"extension-key": "instagram",
+			"web-dir": ".Build/public"
 		}
 	},
 	"scripts": {
-		"c": "@composer normalize --dry-run",
+		"ci:composer:normalize": "@composer normalize --dry-run",
 		"ci:coverage": [
 			"@ci:coverage:functional"
 		],
 		"ci:coverage:functional": "phpunit -c Tests/Functional/phpunit.xml -d memory_limit=-1 --coverage-php=coverage/functional.cov Tests/Functional",
 		"ci:coverage:merge": "phpcov merge --clover=./coverage/clover.xml coverage/",
 		"ci:coverage:unit": "phpunit -c Tests/Unit/phpunit.xml -d memory_limit=-1 --coverage-php=coverage/unit.cov Tests/Unit",
+		"ci:lint:typoscript": [
+			"typoscript-lint --ansi -n --fail-on-warnings -vvv Configuration/TypoScript"
+		],
 		"ci:php:cs-fixer": "php-cs-fixer fix -v --dry-run --using-cache no --diff",
 		"ci:php:lint": "find *.php Classes Configuration Tests -name '*.php' -print0 | xargs -0 -n 1 -P 4 php -l",
 		"ci:php:stan": "phpstan --no-progress",
@@ -77,9 +83,6 @@
 		],
 		"ci:test:unit": [
 			"phpunit -c Tests/Unit/phpunit.xml -d memory_limit=-1"
-		],
-		"ci:lint:typoscript": [
-			"typoscript-lint --ansi -n --fail-on-warnings -vvv Configuration/TypoScript"
 		],
 		"fix:php:cs-fixer": [
 			"php-cs-fixer fix -v --using-cache no"
